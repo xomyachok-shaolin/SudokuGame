@@ -23,23 +23,27 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        getUIItems();
-        setFonts();
-    }
-
-    public void getUIItems() {
         aboutBtn = (Button) findViewById(R.id.btnAbout);
         exitBtn = (Button) findViewById(R.id.btnExit);
         newGameBtn = (Button) findViewById(R.id.btnNewGame);
         continueBtn = (Button) findViewById(R.id.btnContinue);
 
+        newGameBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startGame();
+            }
+        });
+
         title = (TextView) findViewById(R.id.title);
+
+        setFonts();
     }
 
     public void continueGame(View view) {
 
     }
-    public void newGame(View view) {
+    public void startGame() {
         Intent intent = new Intent(this, GameActivity.class);
         startActivity(intent);
     }

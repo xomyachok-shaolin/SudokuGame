@@ -26,7 +26,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="@string/continueGame"
-            android:textSize="50dp"
+            android:textSize="50sp"
             android:onClick="continueGame"/>
         <Button
             android:id="@+id/btnNewGame"
@@ -47,7 +47,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="@string/exitGame"
-            android:textSize="50dp"
+            android:textSize="50sp"
             android:onClick="exitGame"/>
     </LinearLayout>
 

@@ -26,6 +26,8 @@ class Game extends BaseAdapter {
         this.mContext = context;
         arrPict = new ArrayList<>(mCols*mRows);
         mRes = mContext.getResources();
+
+        createField();
     }
 
     @Override
@@ -50,7 +52,7 @@ class Game extends BaseAdapter {
         if (view == null)
             imageView = new ImageView(mContext);
         else
-            imageView = (ImageView) view;
+            imageView = (ImageView)view;
 
         Integer drawableId = mRes.getIdentifier(arrPict.get(position),"drawable", mContext.getPackageName());
         imageView.setImageResource(drawableId);
@@ -205,5 +207,15 @@ class Game extends BaseAdapter {
                 i6 == 9 && i7 == 9 && i8 == 9 && i9 == 9)
             return true;
         return false;
+    }
+
+    public void setNumber(int position, String selectedButton) {
+        for(int i = 0; i< unblockPositions.length; i++){
+            if(unblockPositions[i] == position) {
+                arrPict.set(position, selectedButton);
+                helperArray[getRow(position)][getCell(position)] = Integer.parseInt(selectedButton.split("n")[1]);
+                notifyDataSetChanged();
+            }
+        }
     }
 }

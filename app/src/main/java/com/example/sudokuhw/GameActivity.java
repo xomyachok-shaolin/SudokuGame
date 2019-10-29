@@ -1,12 +1,16 @@
 package com.example.sudokuhw;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class GameActivity extends Activity implements View.OnClickListener {
 
@@ -21,16 +25,30 @@ public class GameActivity extends Activity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
-        getUIItems();
-        mGame = new Game(this);
 
+        mGridField = (GridView) findViewById(R.id.field);
         mGridField.setNumColumns(9);
         mGridField.setEnabled(true);
-        mGridField.setAdapter(mGame);
-    }
 
-    private void getUIItems () {
-        mGridField = (GridView) findViewById(R.id.field);
+        title = (TextView) findViewById(R.id.gameTitle);
+
+        mGame = new Game(this);
+        mGridField.setAdapter(mGame);
+
+        mGridField.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                mGame.setNumber(position, selectedButton);
+                if(mGame.checkRepeatedValues(selectedButton)){
+                    Toast toast = Toast.makeText(getApplicationContext(),
+                            "You have repeated values: " + selectedButton.split("n")[1], Toast.LENGTH_SHORT);
+                    toast.show();
+                }
+                if(mGame.checkWinner()) showWinnerDialod();
+            }
+        });
+
+
 
         b1 = (Button) findViewById(R.id.btn1);
         b2 = (Button) findViewById(R.id.btn2);
@@ -42,12 +60,6 @@ public class GameActivity extends Activity implements View.OnClickListener {
         b8 = (Button) findViewById(R.id.btn8);
         b9 = (Button) findViewById(R.id.btn9);
 
-        title = (TextView) findViewById(R.id.gameTitle);
-
-        Typeface type = Typeface.createFromAsset(getAssets(), "font1.otf");
-        title.setTypeface(type);
-    }
-    public void setOnClickListener() {
         b1.setOnClickListener(this);
         b2.setOnClickListener(this);
         b3.setOnClickListener(this);
@@ -57,12 +69,14 @@ public class GameActivity extends Activity implements View.OnClickListener {
         b7.setOnClickListener(this);
         b8.setOnClickListener(this);
         b9.setOnClickListener(this);
+
+        Typeface type = Typeface.createFromAsset(getAssets(), "font1.otf");
+        title.setTypeface(type);
     }
 
-
     @Override
-    public void onClick(View v) {
-        switch (mGridField.getId()) {
+    public void onClick(View view) {
+        switch (view.getId()) {
             case R.id.btn1: selectedButton = "n1";
                 break;
             case R.id.btn2: selectedButton = "n2";
@@ -82,5 +96,23 @@ public class GameActivity extends Activity implements View.OnClickListener {
             case R.id.btn9: selectedButton = "n9 ";
                 break;
         }
+    }
+
+    private void showWinnerDialod() {
+        final AlertDialog.Builder alertBox = new AlertDialog.Builder(this);
+
+        alertBox.setTitle("Congratulations");
+
+        String TextToast = "YOU ARE WIN";
+        alertBox.setMessage(TextToast);
+
+        alertBox.setNeutralButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                finish();
+            }
+        });
+
+        alertBox.show();
     }
 }
