@@ -16,7 +16,34 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/title"
-            android:text=""/>
+            android:text="@string/mainTitle"
+            android:layout_marginBottom="5dip"
+            android:textSize="40sp"/>
+
+        <Button
+            android:id="@+id/btnContinue"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/continueGame"
+            android:textSize="50dp"/>
+        <Button
+            android:id="@+id/btnNewGame"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/new_game"
+            android:textSize="50dp"/>
+        <Button
+            android:id="@+id/btnAbout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/about"
+            android:textSize="50dp"/>
+        <Button
+            android:id="@+id/btnExit"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/exitGame"
+            android:textSize="50dp"/>
     </LinearLayout>
 
 
