@@ -10,15 +10,16 @@
         android:id="@+id/gameTitle"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/mainTitle"
         android:gravity="center"
-        android:textSize="50dp"/>
+        android:text="@string/mainTitle"
+        android:textSize="50dp" />
 
     <GridView
         android:id="@+id/field"
         android:layout_width="fill_parent"
-        android:layout_height="595dp"
-        android:background="@drawable/field" />
+        android:layout_height="587dp"
+        android:background="@drawable/field"
+        android:gravity="center" />
 
     <LinearLayout
         android:layout_width="fill_parent"
