@@ -25,25 +25,29 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="@string/continueGame"
-            android:textSize="50dp"/>
+            android:textSize="50dp"
+            android:onClick="continueGame"/>
         <Button
             android:id="@+id/btnNewGame"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="@string/new_game"
-            android:textSize="50dp"/>
+            android:textSize="50dp"
+            android:onClick="newGame"/>
         <Button
             android:id="@+id/btnAbout"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="@string/about"
-            android:textSize="50dp"/>
+            android:textSize="50dp"
+            android:onClick="aboutGame"/>
         <Button
             android:id="@+id/btnExit"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="@string/exitGame"
-            android:textSize="50dp"/>
+            android:textSize="50dp"
+            android:onClick="exitGame"/>
     </LinearLayout>
 
 
