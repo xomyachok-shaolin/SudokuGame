@@ -122,7 +122,7 @@ class Game extends BaseAdapter {
 
     private void transposeMatrix(int array[][]) {
         for (int i = 0; i < mRows; i++) {
-            for (int j = 0; j < mCols; j++) {
+            for (int j = 0; j < i; j++) {
                 int tmp = array[i][j];
                 array[i][j] = array[j][i];
                 array[j][i] = tmp;
@@ -210,7 +210,7 @@ class Game extends BaseAdapter {
     }
 
     public void setNumber(int position, String selectedButton) {
-        for(int i = 0; i< unblockPositions.length; i++){
+        for(int i = 0; i < unblockPositions.length; i++){
             if(unblockPositions[i] == position) {
                 arrPict.set(position, selectedButton);
                 helperArray[getRow(position)][getCell(position)] = Integer.parseInt(selectedButton.split("n")[1]);

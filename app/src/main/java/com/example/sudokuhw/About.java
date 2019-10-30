@@ -26,9 +26,10 @@ public class About extends AppCompatActivity {
 
     }
     private void setFonts() {
-        Typeface type = Typeface.createFromAsset(getAssets(), "font1.otf");
-        title.setTypeface(type);
-        inf.setTypeface(type);
+        Typeface type = Typeface.createFromAsset(getAssets(), "font.otf");
+        Typeface type1 = Typeface.createFromAsset(getAssets(), "font1.otf");
+        title.setTypeface(type1);
+        inf.setTypeface(type1);
 
     }
 }

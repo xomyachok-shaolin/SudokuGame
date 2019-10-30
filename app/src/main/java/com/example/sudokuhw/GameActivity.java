@@ -41,7 +41,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
                 mGame.setNumber(position, selectedButton);
                 if(mGame.checkRepeatedValues(selectedButton)){
                     Toast toast = Toast.makeText(getApplicationContext(),
-                            "You have repeated values: " + selectedButton.split("n")[1], Toast.LENGTH_SHORT);
+                            "You have repeated values: " + selectedButton.split("n")[1], Toast.LENGTH_LONG);
                     toast.show();
                 }
                 if(mGame.checkWinner()) showWinnerDialod();
@@ -93,7 +93,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
                 break;
             case R.id.btn8: selectedButton = "n8";
                 break;
-            case R.id.btn9: selectedButton = "n9 ";
+            case R.id.btn9: selectedButton = "n9";
                 break;
         }
     }
