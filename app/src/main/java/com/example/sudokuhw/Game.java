@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -177,7 +178,7 @@ class Game extends BaseAdapter {
                     repeatedY++;
                 }
             }
-            if (repeatedX >= 2 || repeatedY >=2) {
+            if (repeatedX >= 2 || repeatedY >= 2) {
                 return true;
             }
 
@@ -215,6 +216,16 @@ class Game extends BaseAdapter {
                 arrPict.set(position, selectedButton);
                 helperArray[getRow(position)][getCell(position)] = Integer.parseInt(selectedButton.split("n")[1]);
                 notifyDataSetChanged();
+
+                if(this.checkRepeatedValues(selectedButton)){
+                    Toast toast = Toast.makeText(mContext.getApplicationContext(),
+                            "You have repeated values: " + selectedButton.split("n")[1], Toast.LENGTH_SHORT);
+                    toast.show();
+
+                    arrPict.set(position, "nempty");
+                    helperArray[getRow(position)][getCell(position)] = -1;
+                    notifyDataSetChanged();
+                }
             }
         }
     }

@@ -39,11 +39,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 mGame.setNumber(position, selectedButton);
-                if(mGame.checkRepeatedValues(selectedButton)){
-                    Toast toast = Toast.makeText(getApplicationContext(),
-                            "You have repeated values: " + selectedButton.split("n")[1], Toast.LENGTH_LONG);
-                    toast.show();
-                }
+
                 if(mGame.checkWinner()) showWinnerDialod();
             }
         });
