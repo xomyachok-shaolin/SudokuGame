@@ -2,9 +2,11 @@ package com.example.sudokuhw;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.os.SystemClock;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Chronometer;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -88,7 +90,9 @@ class Game extends BaseAdapter {
         helperArray = numberArray;
         Random r = new Random();
         int i = 0;
-        while (i < 70) {
+
+        // difficult - numbers_clear
+        while (i < 1) {
             int i2 = r.nextInt(80);
             arrPict.set(i2,"nempty");
             unblockPositions[i] = i2;

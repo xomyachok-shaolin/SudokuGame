@@ -5,9 +5,11 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.Chronometer;
 import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,6 +20,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
     private Button b1, b2, b3, b4, b5, b6, b7, b8, b9;
     private String selectedButton = "n1";
     private Game mGame;
+    public  Chronometer chronometer;
     TextView title;
 
     @Override
@@ -44,7 +47,11 @@ public class GameActivity extends Activity implements View.OnClickListener {
             }
         });
 
+        chronometer = (Chronometer) findViewById(R.id.chronometer);
+        long startTime = SystemClock.elapsedRealtime();
+        chronometer.setBase(startTime);
 
+        chronometer.start();
 
         b1 = (Button) findViewById(R.id.btn1);
         b2 = (Button) findViewById(R.id.btn2);
@@ -68,6 +75,8 @@ public class GameActivity extends Activity implements View.OnClickListener {
 
         Typeface type = Typeface.createFromAsset(getAssets(), "font1.otf");
         title.setTypeface(type);
+        chronometer.setTypeface(type);
+        chronometer.setTextSize(35);
     }
 
     @Override
@@ -97,9 +106,12 @@ public class GameActivity extends Activity implements View.OnClickListener {
     private void showWinnerDialod() {
         final AlertDialog.Builder alertBox = new AlertDialog.Builder(this);
 
+        String time = (String)chronometer.getText();
+        chronometer.stop();
+
         alertBox.setTitle("Congratulations");
 
-        String TextToast = "YOU ARE WIN";
+        String TextToast = "YOU ARE WIN\nYour time: " + time;
         alertBox.setMessage(TextToast);
 
         alertBox.setNeutralButton("Ok", new DialogInterface.OnClickListener() {

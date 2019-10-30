@@ -20,11 +20,15 @@
         android:alwaysDrawnWithCache="false"
         android:background="@drawable/field"
         android:gravity="center" />
+    <Chronometer
+        android:id="@+id/chronometer"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"/>
 
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="50dp"
         android:gravity="center"
         android:orientation="horizontal"
         android:background="#b9ffe58f"

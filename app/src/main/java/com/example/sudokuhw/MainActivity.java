@@ -41,11 +41,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void continueGame(View view) {
-
+        super.onRestart();
     }
     public void startGame() {
         Intent intent = new Intent(this, GameActivity.class);
         startActivity(intent);
+
     }
     public void aboutGame(View view) {
         Intent intent = new Intent(this, About.class);
