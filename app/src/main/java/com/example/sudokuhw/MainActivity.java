@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -31,7 +32,14 @@ public class MainActivity extends AppCompatActivity {
         newGameBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startGame();
+                startGame(GameActivity.DIFFICULTY_EASY);
+            }
+        });
+
+        continueBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                continueGame();
             }
         });
 
@@ -40,11 +48,13 @@ public class MainActivity extends AppCompatActivity {
         setFonts();
     }
 
-    public void continueGame(View view) {
-        super.onRestart();
+    public void continueGame() {
+        startGame(GameActivity.DIFFICULTY_CONTINUE);
     }
-    public void startGame() {
+    private void startGame(int i) {
+        Log.d("Sudoku", "clicked on " + i);
         Intent intent = new Intent(this, GameActivity.class);
+        intent.putExtra(GameActivity.KEY_DIFFICULTY, i);
         startActivity(intent);
 
     }

@@ -2,6 +2,7 @@ package com.example.sudokuhw;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.os.Parcelable;
 import android.os.SystemClock;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,24 +14,54 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Random;
 
+import static com.example.sudokuhw.GameActivity.arrPict;
+import static com.example.sudokuhw.GameActivity.mCols;
+import static com.example.sudokuhw.GameActivity.mRows;
+import static com.example.sudokuhw.GameActivity.numberArray;
+import static com.example.sudokuhw.GameActivity.helperArray;
+import static com.example.sudokuhw.GameActivity.unblockPositions;
+
 class Game extends BaseAdapter {
 
     private Context mContext;
-    private final Integer mRows = 9, mCols = 9;
-    public int numberArray[][] = new int[mRows][mCols];
 
     private Resources mRes;
-    private ArrayList<String> arrPict;
-    // массив незаблокированных позиций
-    int  unblockPositions[] = new int[mRows*mCols];
-    int helperArray[][];
 
-    public Game(Context context) {
+
+    private boolean checkedContinueGame;
+
+    public Game(Context context, int diff) {
+
+
+
+
         this.mContext = context;
-        arrPict = new ArrayList<>(mCols*mRows);
+
         mRes = mContext.getResources();
 
-        createField();
+
+        //createField(diff);
+    }
+
+    /** Convert an array into a puzzle string */
+    static public String toPuzzleString(int[][] numbers) {
+        StringBuilder buf = new StringBuilder();
+
+        for (int i = 0; i < mRows; i++)
+            for (int j = 0; j < mCols; j++)
+                buf.append(numbers[i][j]);
+        return buf.toString();
+    }
+
+    /** Convert a puzzle string into an array */
+    static public int[][] fromPuzzleString(String string) {
+        int[][] numbers = new int[mRows][mCols];
+        for (int i = 0; i < mRows; i++) {
+            for (int j = 0; j < mCols; j++) {
+                numbers[i][j] = string.charAt(i) - '0';
+            }
+        }
+        return numbers;
     }
 
     @Override
@@ -63,7 +94,10 @@ class Game extends BaseAdapter {
         return imageView;
     }
 
-    private void createField() {
+    public void createField(int diff) {
+
+        if (GameActivity.DIFFICULTY_CONTINUE != diff) {
+            arrPict = new ArrayList<>(mCols*mRows);
         // init array
         initArray();
         // shift numbers
@@ -81,23 +115,30 @@ class Game extends BaseAdapter {
         shakedArray();
         // transpose array
         transposeMatrix(numberArray);
-        // add pictures number to field
-        for (int i = 0; i < mRows; i++) {
-            for (int j = 0; j < mCols; j++) {
-                arrPict.add("n" + numberArray[i][j]);
-            }
-        }
-        helperArray = numberArray;
-        Random r = new Random();
-        int i = 0;
 
-        // difficult - numbers_clear
-        while (i < 1) {
-            int i2 = r.nextInt(80);
-            arrPict.set(i2,"nempty");
-            unblockPositions[i] = i2;
-            helperArray[getRow(i2)][getCell(i2)] = -1;
-            i++;
+            // add pictures number to field
+            for (int i = 0; i < mRows; i++) {
+                for (int j = 0; j < mCols; j++) {
+                    arrPict.add("n" + numberArray[i][j]);
+                }
+            }
+
+            helperArray = numberArray;
+            Random r = new Random();
+            int i = 0;
+
+            // difficult - numbers_clear
+            while (i < 10) {
+                int i2 = r.nextInt(80);
+                arrPict.set(i2, "nempty");
+                unblockPositions[i] = i2;
+                helperArray[getRow(i2)][getCell(i2)] = -1;
+                i++;
+                numberArray[getRow(i2)][getCell(i2)] = -1;
+            }
+        } else {
+
+
         }
     }
 
@@ -167,6 +208,7 @@ class Game extends BaseAdapter {
         } while (i < mRows);
     }
 
+    /* функция для установления логической невалидности при вводе */
     public boolean checkRepeatedValues(String selectedButton) {
         int repeatedX = 0;
         int repeatedY = 0;
@@ -191,7 +233,7 @@ class Game extends BaseAdapter {
         }
         return false;
     }
-
+    /* функция которая позволяет убедиться что игра завершена */
     public boolean checkWinner() {
         int i1 = 0, i2 = 0, i3 = 0, i4 = 0, i5 = 0,
                     i6 = 0, i7 = 0, i8 = 0, i9 = 0;
@@ -222,10 +264,11 @@ class Game extends BaseAdapter {
                 notifyDataSetChanged();
 
                 if(this.checkRepeatedValues(selectedButton)){
+                    // в случае логической валидности при вводе возвращаем сообщение
                     Toast toast = Toast.makeText(mContext.getApplicationContext(),
                             "You have repeated values: " + selectedButton.split("n")[1], Toast.LENGTH_SHORT);
                     toast.show();
-
+                    // и устанавливаем пустой вид ячейки
                     arrPict.set(position, "nempty");
                     helperArray[getRow(position)][getCell(position)] = -1;
                     notifyDataSetChanged();
