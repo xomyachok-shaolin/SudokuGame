@@ -2,23 +2,24 @@ package com.example.sudokuhw;
 
 import android.content.Context;
 import android.content.res.Resources;
-import android.os.Parcelable;
 import android.os.SystemClock;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Chronometer;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Random;
 
+import static com.example.sudokuhw.GameActivity.DIFFICULTY_CONTINUE;
 import static com.example.sudokuhw.GameActivity.arrPict;
+import static com.example.sudokuhw.GameActivity.chronometer;
 import static com.example.sudokuhw.GameActivity.mCols;
 import static com.example.sudokuhw.GameActivity.mRows;
 import static com.example.sudokuhw.GameActivity.numberArray;
 import static com.example.sudokuhw.GameActivity.helperArray;
+import static com.example.sudokuhw.GameActivity.startTime;
 import static com.example.sudokuhw.GameActivity.unblockPositions;
 
 class Game extends BaseAdapter {
@@ -26,6 +27,8 @@ class Game extends BaseAdapter {
     private Context mContext;
 
     private Resources mRes;
+
+
 
 
     private boolean checkedContinueGame;
@@ -41,27 +44,6 @@ class Game extends BaseAdapter {
 
 
         //createField(diff);
-    }
-
-    /** Convert an array into a puzzle string */
-    static public String toPuzzleString(int[][] numbers) {
-        StringBuilder buf = new StringBuilder();
-
-        for (int i = 0; i < mRows; i++)
-            for (int j = 0; j < mCols; j++)
-                buf.append(numbers[i][j]);
-        return buf.toString();
-    }
-
-    /** Convert a puzzle string into an array */
-    static public int[][] fromPuzzleString(String string) {
-        int[][] numbers = new int[mRows][mCols];
-        for (int i = 0; i < mRows; i++) {
-            for (int j = 0; j < mCols; j++) {
-                numbers[i][j] = string.charAt(i) - '0';
-            }
-        }
-        return numbers;
     }
 
     @Override
@@ -96,25 +78,31 @@ class Game extends BaseAdapter {
 
     public void createField(int diff) {
 
-        if (GameActivity.DIFFICULTY_CONTINUE != diff) {
-            arrPict = new ArrayList<>(mCols*mRows);
-        // init array
-        initArray();
-        // shift numbers
-        shiftNumbers(3, 1);
-        shiftNumbers(6, 2);
-        shiftNumbers(1, 3);
-        shiftNumbers(4, 4);
-        shiftNumbers(7, 5);
-        shiftNumbers(2, 6);
-        shiftNumbers(5, 7);
-        shiftNumbers(8, 8);
-        // transpose array
-        transposeMatrix(numberArray);
-        // shake numbers
-        shakedArray();
-        // transpose array
-        transposeMatrix(numberArray);
+        if (startTime == 0) {
+
+            startTime = SystemClock.elapsedRealtime();
+            chronometer.setBase(startTime);
+            chronometer.start();
+
+
+            arrPict = new ArrayList<>(mCols * mRows);
+            // init array
+            initArray();
+            // shift numbers
+            shiftNumbers(3, 1);
+            shiftNumbers(6, 2);
+            shiftNumbers(1, 3);
+            shiftNumbers(4, 4);
+            shiftNumbers(7, 5);
+            shiftNumbers(2, 6);
+            shiftNumbers(5, 7);
+            shiftNumbers(8, 8);
+            // transpose array
+            transposeMatrix(numberArray);
+            // shake numbers
+            shakedArray();
+            // transpose array
+            transposeMatrix(numberArray);
 
             // add pictures number to field
             for (int i = 0; i < mRows; i++) {
@@ -137,8 +125,8 @@ class Game extends BaseAdapter {
                 numberArray[getRow(i2)][getCell(i2)] = -1;
             }
         } else {
-
-
+            chronometer.setBase(startTime);
+            chronometer.start();
         }
     }
 

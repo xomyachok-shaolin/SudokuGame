@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import static com.example.sudokuhw.GameActivity.KEY_DIFFICULTY;
+
 public class MainActivity extends AppCompatActivity {
 
     Button aboutBtn;
@@ -24,10 +26,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        aboutBtn = (Button) findViewById(R.id.btnAbout);
-        exitBtn = (Button) findViewById(R.id.btnExit);
-        newGameBtn = (Button) findViewById(R.id.btnNewGame);
-        continueBtn = (Button) findViewById(R.id.btnContinue);
+        aboutBtn = findViewById(R.id.btnAbout);
+        exitBtn = findViewById(R.id.btnExit);
+        newGameBtn = findViewById(R.id.btnNewGame);
+        continueBtn = findViewById(R.id.btnContinue);
 
         newGameBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -43,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        title = (TextView) findViewById(R.id.title);
+        title = findViewById(R.id.title);
 
         setFonts();
     }
@@ -54,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
     private void startGame(int i) {
         Log.d("Sudoku", "clicked on " + i);
         Intent intent = new Intent(this, GameActivity.class);
-        intent.putExtra(GameActivity.KEY_DIFFICULTY, i);
+        KEY_DIFFICULTY = i;
         startActivity(intent);
 
     }
