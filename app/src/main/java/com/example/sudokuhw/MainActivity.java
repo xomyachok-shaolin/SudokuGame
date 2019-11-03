@@ -5,14 +5,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import static com.example.sudokuhw.GameActivity.KEY_DIFFICULTY;
-
 public class MainActivity extends AppCompatActivity {
+
+    static final int KEY_NEWGAME = 1;
+    static final int KEY_CONTINUE = 2;
+    static int KEY_MODE = KEY_NEWGAME;
 
     Button aboutBtn;
     Button exitBtn;
@@ -26,15 +27,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        aboutBtn = findViewById(R.id.btnAbout);
-        exitBtn = findViewById(R.id.btnExit);
-        newGameBtn = findViewById(R.id.btnNewGame);
-        continueBtn = findViewById(R.id.btnContinue);
+        getUIItems();
 
         newGameBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startGame(GameActivity.DIFFICULTY_EASY);
+                startGame(KEY_NEWGAME);
             }
         });
 
@@ -45,20 +43,27 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        title = findViewById(R.id.title);
+
 
         setFonts();
     }
 
+    private void getUIItems() {
+        aboutBtn = findViewById(R.id.btnAbout);
+        exitBtn = findViewById(R.id.btnExit);
+        newGameBtn = findViewById(R.id.btnNewGame);
+        continueBtn = findViewById(R.id.btnContinue);
+
+        title = findViewById(R.id.title);
+    }
+
     public void continueGame() {
-        startGame(GameActivity.DIFFICULTY_CONTINUE);
+        startGame(KEY_CONTINUE);
     }
     private void startGame(int i) {
-        Log.d("Sudoku", "clicked on " + i);
         Intent intent = new Intent(this, GameActivity.class);
-        KEY_DIFFICULTY = i;
+        KEY_MODE = i;
         startActivity(intent);
-
     }
     public void aboutGame(View view) {
         Intent intent = new Intent(this, About.class);

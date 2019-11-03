@@ -12,7 +12,6 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Random;
 
-import static com.example.sudokuhw.GameActivity.DIFFICULTY_CONTINUE;
 import static com.example.sudokuhw.GameActivity.arrPict;
 import static com.example.sudokuhw.GameActivity.chronometer;
 import static com.example.sudokuhw.GameActivity.mCols;
@@ -25,25 +24,19 @@ import static com.example.sudokuhw.GameActivity.unblockPositions;
 class Game extends BaseAdapter {
 
     private Context mContext;
-
     private Resources mRes;
 
-
-
-
-    private boolean checkedContinueGame;
-
-    public Game(Context context, int diff) {
-
-
-
+    public Game(Context context) {
 
         this.mContext = context;
-
         mRes = mContext.getResources();
 
-
-        //createField(diff);
+        if (MainActivity.KEY_MODE  != MainActivity.KEY_CONTINUE || startTime == 0 ) {
+            createField();
+            startTime = SystemClock.elapsedRealtime();
+        }
+        chronometer.setBase(startTime);
+        chronometer.start();
     }
 
     @Override
@@ -76,14 +69,7 @@ class Game extends BaseAdapter {
         return imageView;
     }
 
-    public void createField(int diff) {
-
-        if (startTime == 0) {
-
-            startTime = SystemClock.elapsedRealtime();
-            chronometer.setBase(startTime);
-            chronometer.start();
-
+    public void createField() {
 
             arrPict = new ArrayList<>(mCols * mRows);
             // init array
@@ -103,7 +89,6 @@ class Game extends BaseAdapter {
             shakedArray();
             // transpose array
             transposeMatrix(numberArray);
-
             // add pictures number to field
             for (int i = 0; i < mRows; i++) {
                 for (int j = 0; j < mCols; j++) {
@@ -114,7 +99,6 @@ class Game extends BaseAdapter {
             helperArray = numberArray;
             Random r = new Random();
             int i = 0;
-
             // difficult - numbers_clear
             while (i < 10) {
                 int i2 = r.nextInt(80);
@@ -122,12 +106,7 @@ class Game extends BaseAdapter {
                 unblockPositions[i] = i2;
                 helperArray[getRow(i2)][getCell(i2)] = -1;
                 i++;
-                numberArray[getRow(i2)][getCell(i2)] = -1;
             }
-        } else {
-            chronometer.setBase(startTime);
-            chronometer.start();
-        }
     }
 
     public int getRow(int position) {
@@ -196,7 +175,7 @@ class Game extends BaseAdapter {
         } while (i < mRows);
     }
 
-    /* функция для установления логической невалидности при вводе */
+    /* функция для установления логической валидности при вводе */
     public boolean checkRepeatedValues(String selectedButton) {
         int repeatedX = 0;
         int repeatedY = 0;
@@ -205,16 +184,13 @@ class Game extends BaseAdapter {
 
         for (int i = 0; i < mRows; i++) {
             for (int j = 0; j < mCols; j++) {
-                if (helperArray[i][j] == number) {
+                if (helperArray[i][j] == number)
                     repeatedX++;
-                }
-                if (helperArray[j][i] == number) {
+                if (helperArray[j][i] == number)
                     repeatedY++;
-                }
             }
-            if (repeatedX >= 2 || repeatedY >= 2) {
+            if (repeatedX >= 2 || repeatedY >= 2)
                 return true;
-            }
 
             repeatedX = 0;
             repeatedY = 0;
@@ -225,7 +201,7 @@ class Game extends BaseAdapter {
     public boolean checkWinner() {
         int i1 = 0, i2 = 0, i3 = 0, i4 = 0, i5 = 0,
                     i6 = 0, i7 = 0, i8 = 0, i9 = 0;
-        for (int i = 0; i < mRows; i++) {
+        for (int i = 0; i < mRows; i++)
             for (int j = 0; j < mCols; j++) {
                 if (helperArray[i][j] == 1) i1++;
                 if (helperArray[i][j] == 2) i2++;
@@ -237,9 +213,8 @@ class Game extends BaseAdapter {
                 if (helperArray[i][j] == 8) i8++;
                 if (helperArray[i][j] == 9) i9++;
             }
-        }
-        if (i1 == 9 && i2 == 9 && i3 == 9 && i4 == 9 && i5 == 9 &&
-                i6 == 9 && i7 == 9 && i8 == 9 && i9 == 9)
+        if (i1 == 9 && i2 == 9 && i3 == 9 && i4 == 9 && i5 == 9
+                    && i6 == 9 && i7 == 9 && i8 == 9 && i9 == 9)
             return true;
         return false;
     }
@@ -249,10 +224,11 @@ class Game extends BaseAdapter {
             if(unblockPositions[i] == position) {
                 arrPict.set(position, selectedButton);
                 helperArray[getRow(position)][getCell(position)] = Integer.parseInt(selectedButton.split("n")[1]);
+                // метод необходимый после обновления списка массива
                 notifyDataSetChanged();
 
                 if(this.checkRepeatedValues(selectedButton)){
-                    // в случае логической валидности при вводе возвращаем сообщение
+                    // в случае логической валидности при вводе создаем всплывающее сообщение
                     Toast toast = Toast.makeText(mContext.getApplicationContext(),
                             "You have repeated values: " + selectedButton.split("n")[1], Toast.LENGTH_SHORT);
                     toast.show();

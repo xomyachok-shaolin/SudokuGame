@@ -19,17 +19,13 @@ public class About extends AppCompatActivity {
         setFonts();
     }
 
-    public void getUIItems() {
-
-        title = (TextView) findViewById(R.id.abooutTitle);
-        inf = (TextView) findViewById(R.id.aboutTV);
-
+    private void getUIItems() {
+        title = findViewById(R.id.abooutTitle);
+        inf = findViewById(R.id.aboutTV);
     }
     private void setFonts() {
-        Typeface type = Typeface.createFromAsset(getAssets(), "font.otf");
-        Typeface type1 = Typeface.createFromAsset(getAssets(), "font1.otf");
-        title.setTypeface(type1);
-        inf.setTypeface(type1);
-
+        Typeface type = Typeface.createFromAsset(getAssets(), "font1.otf");
+        title.setTypeface(type);
+        inf.setTypeface(type);
     }
 }

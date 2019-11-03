@@ -15,5 +15,4 @@
         of individual regions. For example, the same single integer may not appear twice in the same row,
         column, or any of the nine 3x3 subregions of the 9x9 playing board.</string>
     <string name="about_game">About game</string>
-    <string name="name_creator">Minaev Aleksandr</string>
 </resources>

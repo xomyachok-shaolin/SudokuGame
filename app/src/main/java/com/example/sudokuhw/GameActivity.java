@@ -16,38 +16,51 @@ import java.util.ArrayList;
 
 public class GameActivity extends Activity implements View.OnClickListener {
 
-
-    public static int KEY_DIFFICULTY = 0;
-    public static final int DIFFICULTY_EASY = 10;
-    protected static final int DIFFICULTY_CONTINUE = -1;
-
+    private TextView title;
     private GridView mGridField;
     private Button b1, b2, b3, b4, b5, b6, b7, b8, b9;
     private String selectedButton = "n1";
     private Game mGame;
+
     public static Chronometer chronometer;
-    TextView title;
+    public static long startTime = 0;
 
-    public static final Integer mRows = 9, mCols = 9;
-
+    static final Integer mRows = 9, mCols = 9;
     public static int numberArray[][] = new int[mRows][mCols];
-
     // массив незаблокированных позиций
     public static int  unblockPositions[] = new int[mRows*mCols];
     public static int helperArray[][];
 
     public static ArrayList<String> arrPict;
 
-    public static long startTime = 0;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
+        getUIItems();
 
+        mGame = new Game(this);
 
+        mGridField.setAdapter(mGame);
+        mGridField.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                mGame.setNumber(position, selectedButton);
 
+                if(mGame.checkWinner()) {
+                    showWinnerDialod();
+                    MainActivity.KEY_MODE = MainActivity.KEY_NEWGAME;
+                }
+            }
+        });
+
+        setFonts();
+
+        MainActivity.KEY_MODE = MainActivity.KEY_CONTINUE;
+    }
+
+    private void getUIItems() {
         mGridField = findViewById(R.id.field);
         mGridField.setNumColumns(9);
         mGridField.setEnabled(true);
@@ -55,29 +68,6 @@ public class GameActivity extends Activity implements View.OnClickListener {
         title = findViewById(R.id.gameTitle);
 
         chronometer = findViewById(R.id.chronometer);
-
-        int diff = KEY_DIFFICULTY;
-
-        mGame = new Game(this, diff);
-
-        mGame.createField(diff);
-
-        mGridField.setAdapter(mGame);
-
-
-
-        mGridField.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                mGame.setNumber(position, selectedButton);
-
-                if(mGame.checkWinner()) showWinnerDialod();
-            }
-        });
-
-
-
-
 
         b1 = findViewById(R.id.btn1);
         b1.setOnClickListener(this);
@@ -97,14 +87,13 @@ public class GameActivity extends Activity implements View.OnClickListener {
         b8.setOnClickListener(this);
         b9 = findViewById(R.id.btn9);
         b9.setOnClickListener(this);
+    }
 
+    private void setFonts() {
         Typeface type = Typeface.createFromAsset(getAssets(), "font1.otf");
         title.setTypeface(type);
         chronometer.setTypeface(type);
         chronometer.setTextSize(35);
-
-        // If the activity is restarted, do a continue next time
-       KEY_DIFFICULTY = DIFFICULTY_CONTINUE;
     }
 
     @Override
@@ -139,7 +128,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
 
         alertBox.setTitle("Congratulations");
 
-        String TextToast = "YOU ARE WIN\nYour time: " + time;
+        String TextToast = "YOU ARE WIN!\nYour time: " + time;
         alertBox.setMessage(TextToast);
 
         alertBox.setNeutralButton("Ok", new DialogInterface.OnClickListener() {
