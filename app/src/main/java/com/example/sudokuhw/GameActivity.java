@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.GridView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -118,6 +119,9 @@ public class GameActivity extends Activity implements View.OnClickListener {
             case R.id.btn9: selectedButton = "n9";
                 break;
         }
+        Toast toast = Toast.makeText(getApplicationContext(),
+                "You are selected to " + selectedButton.split("n")[1], Toast.LENGTH_SHORT);
+        toast.show();
     }
 
     private void showWinnerDialod() {

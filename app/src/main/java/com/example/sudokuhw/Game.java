@@ -22,7 +22,6 @@ import static com.example.sudokuhw.GameActivity.startTime;
 import static com.example.sudokuhw.GameActivity.unblockPositions;
 
 class Game extends BaseAdapter {
-
     private Context mContext;
     private Resources mRes;
 
