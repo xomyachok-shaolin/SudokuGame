@@ -120,7 +120,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
                 break;
         }
         Toast toast = Toast.makeText(getApplicationContext(),
-                "You are selected to " + selectedButton.split("n")[1], Toast.LENGTH_SHORT);
+                "Вы выбрали " + selectedButton.split("n")[1], Toast.LENGTH_SHORT);
         toast.show();
     }
 
@@ -130,12 +130,12 @@ public class GameActivity extends Activity implements View.OnClickListener {
         String time = (String)chronometer.getText();
         chronometer.stop();
 
-        alertBox.setTitle("Congratulations");
+        alertBox.setTitle("Поздравляем");
 
-        String TextToast = "YOU ARE WIN!\nYour time: " + time;
+        String TextToast = "Вы победили!\nВаше время: " + time;
         alertBox.setMessage(TextToast);
 
-        alertBox.setNeutralButton("Ok", new DialogInterface.OnClickListener() {
+        alertBox.setNeutralButton("Ок", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 finish();

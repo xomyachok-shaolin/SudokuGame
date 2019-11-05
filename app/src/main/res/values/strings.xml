@@ -1,18 +1,18 @@
 <resources>
     <string name="app_name">SudokuHW</string>
-    <string name="mainTitle">Sudoku Game</string>
-    <string name="new_game">New Game</string>
-    <string name="about">About</string>
-    <string name="exitGame">Exit</string>
-    <string name="continueGame">Continue</string>
-    <string name="some_information_about_game">The objective is to fill a 9x9 grid with digits so that
-        each column, each row, and each of the nine 3x3 subgrids that compose the grid (also called
-        "boxes", "blocks", "regions", or "subsquares") contains all of the digits from 1 to 9. The
-        puzzle setter provides a partially completed grid, which for a well-posed puzzle has a unique
-        solution.
+    <string name="mainTitle">Игра Судоку</string>
+    <string name="new_game">Новая игра</string>
+    <string name="about">Описание</string>
+    <string name="exitGame">Выход</string>
+    <string name="continueGame">Продолжить</string>
+    <string name="some_information_about_game">Цель состоит в том, чтобы заполнить сетку 9x9 цифрами, чтобы
+         каждый столбец, каждая строка и каждая из девяти подсеток 3x3, составляющих сетку (также называемая
+         «боксы», «блоки», «регионы» или «подквартиры») содержат все цифры от 1 до 9.
+         сеттер головоломок предоставляет частично заполненную сетку, которая для хорошо поставленной головоломки имеет уникальную
+         решение.
 
-        Completed games are always a type of Latin square with an additional constraint on the contents
-        of individual regions. For example, the same single integer may not appear twice in the same row,
-        column, or any of the nine 3x3 subregions of the 9x9 playing board.</string>
-    <string name="about_game">About game</string>
+         Завершенные игры всегда представляют собой тип латинского квадрата с дополнительным ограничением на содержание
+         отдельных регионов. Например, одно и то же целое число не может появляться дважды в одной строке,
+         или любой из девяти 3x3 субрегионов игрового поля 9x9.</string>
+    <string name="about_game">Об ИГРЕ</string>
 </resources>

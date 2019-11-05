@@ -229,7 +229,7 @@ class Game extends BaseAdapter {
                 if(this.checkRepeatedValues(selectedButton)){
                     // в случае логической валидности при вводе создаем всплывающее сообщение
                     Toast toast = Toast.makeText(mContext.getApplicationContext(),
-                            "You have repeated values: " + selectedButton.split("n")[1], Toast.LENGTH_SHORT);
+                            "Повторяющееся значение: " + selectedButton.split("n")[1], Toast.LENGTH_SHORT);
                     toast.show();
                     // и устанавливаем пустой вид ячейки
                     arrPict.set(position, "nempty");
