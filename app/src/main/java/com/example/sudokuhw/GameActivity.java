@@ -23,16 +23,16 @@ public class GameActivity extends Activity implements View.OnClickListener {
     private String selectedButton = "n1";
     private Game mGame;
 
-    public static Chronometer chronometer;
-    public static long startTime = 0;
+    protected static Chronometer chronometer;
+    protected static long startTime = 0;
 
-    static final Integer mRows = 9, mCols = 9;
-    public static int numberArray[][] = new int[mRows][mCols];
+    protected static final Integer mRows = 9, mCols = 9;
+    protected static int numberArray[][] = new int[mRows][mCols];
     // массив незаблокированных позиций
-    public static int  unblockPositions[] = new int[mRows*mCols];
-    public static int helperArray[][];
+    protected static int  unblockPositions[] = new int[mRows*mCols];
+    protected static int helperArray[][];
 
-    public static ArrayList<String> arrPict;
+    protected static ArrayList<String> arrPict;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +50,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
                 mGame.setNumber(position, selectedButton);
 
                 if(mGame.checkWinner()) {
-                    showWinnerDialod();
+                    showWinnerDialog();
                     MainActivity.KEY_MODE = MainActivity.KEY_NEWGAME;
                 }
             }
@@ -124,7 +124,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
         toast.show();
     }
 
-    private void showWinnerDialod() {
+    private void showWinnerDialog() {
         final AlertDialog.Builder alertBox = new AlertDialog.Builder(this);
 
         String time = (String)chronometer.getText();

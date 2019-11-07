@@ -71,9 +71,9 @@ class Game extends BaseAdapter {
     public void createField() {
 
             arrPict = new ArrayList<>(mCols * mRows);
-            // init array
+            // инициализация массива
             initArray();
-            // shift numbers
+            // сдвиг чисел
             shiftNumbers(3, 1);
             shiftNumbers(6, 2);
             shiftNumbers(1, 3);
@@ -82,13 +82,13 @@ class Game extends BaseAdapter {
             shiftNumbers(2, 6);
             shiftNumbers(5, 7);
             shiftNumbers(8, 8);
-            // transpose array
+            // транспонирование
             transposeMatrix(numberArray);
-            // shake numbers
+            // перемешивание массива
             shakedArray();
-            // transpose array
+            // транспонирование
             transposeMatrix(numberArray);
-            // add pictures number to field
+            // добавление картинок на игровом поле
             for (int i = 0; i < mRows; i++) {
                 for (int j = 0; j < mCols; j++) {
                     arrPict.add("n" + numberArray[i][j]);
@@ -98,7 +98,7 @@ class Game extends BaseAdapter {
             helperArray = numberArray;
             Random r = new Random();
             int i = 0;
-            // difficult - numbers_clear
+            // сложность игры
             while (i < 10) {
                 int i2 = r.nextInt(80);
                 arrPict.set(i2, "nempty");
